@@ -10,7 +10,7 @@ makedocs(;
     sitename="CIndices.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://JuliaSparse.github.io/CIndices.jl",
+        canonical="https://cindices.juliasparse.org",
         edit_link="main",
         assets=String[],
     ),
