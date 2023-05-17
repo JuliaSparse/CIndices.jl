@@ -1,7 +1,7 @@
 name = "CIndices"
 uuid = "5a98b6c4-18fa-405d-92b3-8277d93fed36"
 authors = ["Willow Ahrens <willow.ahrens@mit.edu", "Raye Kimmerer <kimmerer@mit.edu>"]
-version = "1.0.0-DEV"
+version = "0.1"
 
 [compat]
 julia = "1.6"
