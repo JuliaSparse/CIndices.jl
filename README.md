@@ -22,9 +22,6 @@ For example, if `idx_c`, `ptr_c`, and `val` are the internal arrays of a CSC
 matrix in a zero-indexed language, we can represent that matrix as a one-indexed
 Cindex array without copying by calling
 ```julia
-julia> m = 4; n = 3; ptr_c = [0, 3, 3, 5]; idx_c = [1, 2, 3, 0, 2]; val_c = [1.1, 2.2, 3.3, 4.4, 5.5];
-
-
 julia> m = 4; n = 3; ptr_c = [0, 3, 3, 5]; idx_c = [1, 2, 3, 0, 2]; val = [1.1, 2.2, 3.3, 4.4, 5.5];
 
 julia> ptr_jl = unsafe_wrap(Array, reinterpret(Ptr{CIndex{Int}}, pointer(ptr_c)), length(ptr_c); own = false)
