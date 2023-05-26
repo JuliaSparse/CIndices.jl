@@ -46,4 +46,6 @@ for op in [:typemin, :typemax]
     @eval @inline Base.$op(::Type{CIndex{T}}) where {T} = Base.$op(T)
 end
 
+Base.unsafe_convert(::Ptr{T}, a::Vector{CIndex{T}}) where T = Ptr{T}(pointer(a))
+
 end
