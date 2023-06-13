@@ -47,5 +47,6 @@ for op in [:typemin, :typemax]
 end
 
 Base.unsafe_convert(::Ptr{T}, a::Vector{CIndex{T}}) where T = Ptr{T}(pointer(a))
-
+Base.show(io::IO, ::MIME"text/plain", c::CIndex{T}) where T = 
+    print(io, get(io, :typeinfo, Any) === CIndex{T} ? c.val : c)
 end
