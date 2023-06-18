@@ -29,7 +29,7 @@ end
 Base.promote_rule(::Type{CIndex{T}}, ::Type{CIndex{S}}) where {T, S} = promote_type(T, S)
 Base.convert(::Type{CIndex{T}}, i::CIndex) where {T} = CIndex{T}(convert(T, i.val), false)
 Base.hash(x::CIndex, h::UInt) = hash(typeof(x), hash(x.val, h))
-
+Base.eltype(::Type{CIndex{T}}) where T = T
 for op in [:*, :+, :-, :min, :max]
     @eval @inline Base.$op(a::CIndex{T}, b::CIndex{T}) where {T} = CIndex($op(T(a), T(b)))
 end
@@ -47,5 +47,9 @@ for op in [:typemin, :typemax]
 end
 
 Base.unsafe_convert(::Ptr{T}, a::Vector{CIndex{T}}) where T = Ptr{T}(pointer(a))
+Base.show(io::IO, ::MIME"text/plain", c::CIndex{T}) where T = 
+    print(io, get(io, :typeinfo, Any) === CIndex{T} ? c.val + 1 : "CIndex{$T}($(c.val + 1))")
+Base.show(io::IO, c::CIndex{T}) where T = 
+    print(io, get(io, :typeinfo, Any) === CIndex{T} ? c.val + 1 : "CIndex{$T}($(c.val + 1))")
 
 end
