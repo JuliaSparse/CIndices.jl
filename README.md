@@ -7,9 +7,9 @@
 Julia, Matlab, etc. index arrays [starting at
 1](https://docs.julialang.org/en/v1/devdocs/offset-arrays/). C, python, etc.
 index starting at 0. In a dense array, we can simply subtract one from the
-index, and in fact, this is what Julia will does under the hood when you pass a
-vector [between C to
-Julia](https://docs.julialang.org/en/v1/manual/embedding/#Working-with-Arrays). 
+index, and in fact, this is what Julia does under the hood when you pass a
+vector [between C and
+Julia](https://docs.julialang.org/en/v1/manual/embedding/#Working-with-Arrays).
 
 However, for sparse array formats, it's not just a matter of subtracting one
 from the index, as the internal lists of indices, positions, etc all start from
@@ -20,7 +20,7 @@ a sparse array to represent arrays in other languages.
 
 For example, if `idx_c`, `ptr_c`, and `val` are the internal arrays of a CSC
 matrix in a zero-indexed language, we can represent that matrix as a one-indexed
-Cindex array without copying by calling
+`CIndex` array without copying by calling
 ```julia
 julia> using CIndices, SparseArrays
 
