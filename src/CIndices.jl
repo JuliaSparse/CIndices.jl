@@ -3,6 +3,52 @@ module CIndices
 export CIndex
 
 # Courtesy of the fantastique Willow Ahrens
+"""
+    CIndex{T}(i)
+    CIndex(i::T)
+    CIndex{T}(j, false)
+
+A zero-based integer type. A `CIndex` represents the one-based value `i`, but
+stores `i - 1` in its single field of type `T`, so it has the same bits as the
+zero-based index a C library would use for the same position. `CIndex{T}(j, false)`
+builds a `CIndex` from a raw zero-based value `j`.
+
+Use `CIndex{T}` as the index or position type of an array structure (e.g. the
+`colptr` and `rowval` arrays of a `SparseMatrixCSC`) to wrap zero-based data
+from another language without copying or shifting it.
+
+Converting a `CIndex` to an ordinary integer gives the one-based value it represents.
+Arithmetic and comparison between two `CIndex{T}`s act on those values and return a
+`CIndex{T}` (or `Bool`); mixing a `CIndex` with another integer type promotes to that
+integer type.
+
+# Examples
+```jldoctest
+julia> i = CIndex(1)
+CIndex{Int64}(1)
+
+julia> i.val
+0
+
+julia> Int(i)
+1
+
+julia> CIndex{Int32}(0, false)
+CIndex{Int32}(1)
+
+julia> CIndex(3) + CIndex(4)
+CIndex{Int64}(7)
+
+julia> CIndex(2) + 1
+3
+
+julia> reinterpret(CIndex{Int}, [0, 1, 2])
+3-element reinterpret(CIndex{Int64}, ::Vector{Int64}):
+ 1
+ 2
+ 3
+```
+"""
 struct CIndex{T} <: Integer
     val::T
     CIndex{T}(i, b::Bool=true) where {T} = new{T}(T(i) - b)
