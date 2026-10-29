@@ -22,22 +22,24 @@ For example, if `idx_c`, `ptr_c`, and `val` are the internal arrays of a CSC
 matrix in a zero-indexed language, we can represent that matrix as a one-indexed
 Cindex array without copying by calling
 ```julia
+julia> using CIndices, SparseArrays
+
 julia> m = 4; n = 3; ptr_c = [0, 3, 3, 5]; idx_c = [1, 2, 3, 0, 2]; val = [1.1, 2.2, 3.3, 4.4, 5.5];
 
 julia> ptr_jl = unsafe_wrap(Array, reinterpret(Ptr{CIndex{Int}}, pointer(ptr_c)), length(ptr_c); own = false)
 4-element Vector{CIndex{Int64}}:
- CIndex{Int64}(0)
- CIndex{Int64}(3)
- CIndex{Int64}(3)
- CIndex{Int64}(5)
+ 1
+ 4
+ 4
+ 6
 
 julia> idx_jl = unsafe_wrap(Array, reinterpret(Ptr{CIndex{Int}}, pointer(idx_c)), length(idx_c); own = false)
 5-element Vector{CIndex{Int64}}:
- CIndex{Int64}(1)
- CIndex{Int64}(2)
- CIndex{Int64}(3)
- CIndex{Int64}(0)
- CIndex{Int64}(2)
+ 2
+ 3
+ 4
+ 1
+ 3
 
 julia> A = SparseMatrixCSC{Float64, CIndex{Int}}(m, n, ptr_jl, idx_jl, val)
 4×3 SparseMatrixCSC{Float64, CIndex{Int64}} with 5 stored entries:
