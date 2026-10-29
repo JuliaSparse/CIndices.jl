@@ -21,4 +21,5 @@ makedocs(;
 deploydocs(;
     repo="github.com/JuliaSparse/CIndices.jl",
     devbranch="main",
+    cname="cindices.juliasparse.org",
 )
